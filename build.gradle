@@ -1,0 +1,13 @@
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	compile group: 'javax', name: 'javaee-api', version: '7.0'
+	compile 'org.projectlombok:lombok:1.16.8'
+	compile group: 'org.primefaces', name: 'primefaces', version: '6.0'
+    testCompile 'junit:junit:4.12'
+}

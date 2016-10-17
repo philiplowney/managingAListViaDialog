@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<h:head>
+		<title>Editable List Example</title>
+	</h:head>
+	<h:body style="width: 800px; margin-left: auto; margin-right: auto">
+		<h:form id="pageForm">
+			<span style="font-size: 5em">Invite Manager</span>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+			<p:dataTable value="#{indexUI.invites}" var="invite" >
+				<p:column headerText="Name" width="150">
+					<p:commandLink 
+						value="#{invite.firstName} #{invite.surname}"
+						action="#{indexUI.selectInvite(invite)}" 
+						oncomplete="PF('inviteDialog').show();"/>
+				</p:column>
+				<p:column headerText="Email Address">
+					<h:outputText value="#{invite.emailAddress}"/>
+				</p:column>
+				<p:column headerText="Invite Sent?" width="100">
+					<h:outputText value="#{invite.inviteSent ? 'Yes' : 'No'}"/>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton 
+				style="margin-top: 20px;" 
+				value="Add Invite" 
+				action="#{indexUI.clickAdd()}" 
+				oncomplete="PF('inviteDialog').show();" 
+				update="inviteDialog"/>
+			
+			<p:dialog header="Invite" modal="true"
+				resizable="false" closable="false"
+				width="400" widgetVar="inviteDialog" dynamic="true" id="inviteDialog">
+				<ui:param name="editable" value="#{indexUI.pageState == 'ADD' || indexUI.pageState == 'EDIT'}"/>
+				<h:panelGroup id="dialogContent">
+					<p:focus/>
+					<h:panelGrid columns="2" id="fieldGrid">
+						<h:outputLabel value="First Name" style="margin-right: 10px;"/>
+						<h:inputText size="23" value="#{indexUI.selectedInvite.firstName}" rendered="#{editable}"/>
+						<h:outputText size="23" value="#{indexUI.selectedInvite.firstName}" rendered="#{!editable}"/>
+						
+						<h:outputLabel value="Surname"/>
+						<h:inputText size="23" value="#{indexUI.selectedInvite.surname}" rendered="#{editable}"/>
+						<h:outputText size="23" value="#{indexUI.selectedInvite.surname}" rendered="#{!editable}"/>
+						
+						<h:outputLabel value="Email"/>
+						<h:inputText size="23" value="#{indexUI.selectedInvite.emailAddress}" rendered="#{editable}"/>
+						<h:outputText size="23" value="#{indexUI.selectedInvite.emailAddress}" rendered="#{!editable}"/>
+						
+						<h:outputLabel value="Invite Sent"/>
+						<p:selectBooleanCheckbox value="#{indexUI.selectedInvite.inviteSent}" disabled="#{!editable}"/>
+					</h:panelGrid>
+					<hr/>
+					<h:panelGrid id="buttonsGrid" columns="4">
+						<p:commandButton value="Edit" action="#{indexUI.clickEdit()}" update="dialogContent" disabled="#{editable}"/>
+						<p:commandButton id="saveButton" value="Save" action="#{indexUI.clickSave()}" oncomplete="PF('inviteDialog').hide();" update="@form" disabled="#{!editable}"/>
+						<p:commandButton value="Cancel" oncomplete="PF('inviteDialog').hide();" update="@form" action="#{indexUI.clickCancel()}" disabled="#{!editable}"/>
+						<p:commandButton value="Close" onclick="PF('inviteDialog').hide();" update="@form" disabled="#{editable}"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:blockUI trigger="saveButton" block="fieldGrid"/>
+			</p:dialog>
+			<p:dialog showHeader="false" modal="false" widgetVar="pendingDialog" position="top">
+				<h:outputText value="Working..."/>
+			</p:dialog>
+			<p:ajaxStatus onstart="PF('pendingDialog').show();" oncomplete="PF('pendingDialog').hide();"/>
+		</h:form>
+	</h:body>
+</html>

@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Feb 23 23:37:42 GMT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0153-107e-dbd7-00000a9e35f8 
+on database directory C:\Users\Philip\workspace\helloWorld\build\tmp\payaraRunWar\lib\databases\embedded_default with class loader org.gradle.internal.classloader.MutableURLClassLoader@2330e3e0 
+Loaded from file:/C:/Users/Philip/.gradle/caches/modules-2/files-2.1/fish.payara.extras/payara-micro/4.1.153/ce4e16681e0873bf05074cc2017c43e69db7c1e1/payara-micro-4.1.153.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_45-b15
+user.dir=C:\Users\Philip\workspace\helloWorld
+os.name=Windows 8.1
+os.arch=amd64
+os.version=6.3
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
